@@ -72,5 +72,14 @@ public class TicketMasterAPI {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Main entry for sample TicketMaster API requests.
+	 */
+	public static void main(String[] args) {
+		TicketMasterAPI tmApi = new TicketMasterAPI();
+		tmApi.queryAPI(30, -90);
+	}
+
 
 }
