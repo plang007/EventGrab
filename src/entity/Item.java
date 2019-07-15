@@ -7,6 +7,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Item {
+	private String itemId;
+	private String name;
+	private double rating;
+	private String address;
+	private Set<String> categories;
+	private String imageUrl;
+	private String url;
+	private double distance;
+	
 	public String getItemId() {
 		return itemId;
 	}
@@ -31,14 +40,6 @@ public class Item {
 	public double getDistance() {
 		return distance;
 	}
-	private String itemId;
-	private String name;
-	private double rating;
-	private String address;
-	private Set<String> categories;
-	private String imageUrl;
-	private String url;
-	private double distance;
 	
 	public JSONObject toJSONObject() {
 		JSONObject obj = new JSONObject();
@@ -56,5 +57,60 @@ public class Item {
 		}
 		return obj;
 	}
+	
+	/**
+	 * builder pattern
+	 */
+	private Item(ItemBuilder builder) {
+		this.itemId = builder.itemId;
+		this.name = builder.name;
+		this.rating = builder.rating;
+		this.address = builder.address;
+		this.categories = builder.categories;
+		this.imageUrl = builder.imageUrl;
+		this.url = builder.url;
+		this.distance = builder.distance;
+	}
+	
+	public static class ItemBuilder {
+		private String itemId;
+		private String name;
+		private double rating;
+		private String address;
+		private Set<String> categories;
+		private String imageUrl;
+		private String url;
+		private double distance;
+		
+		public Item build() {
+			return new Item(this);
+		}
+		
+		public String getItemId() {
+			return itemId;
+		}
+		public String getName() {
+			return name;
+		}
+		public double getRating() {
+			return rating;
+		}
+		public String getAddress() {
+			return address;
+		}
+		public Set<String> getCategories() {
+			return categories;
+		}
+		public String getImageUrl() {
+			return imageUrl;
+		}
+		public String getUrl() {
+			return url;
+		}
+		public double getDistance() {
+			return distance;
+		}
+	}
+
 
 }
