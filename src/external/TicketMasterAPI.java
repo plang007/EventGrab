@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -125,6 +127,25 @@ public class TicketMasterAPI {
 		return "";
 	}
 	
+	private Set<String> getCategories(JSONObject event) throws JSONException {
+		Set<String> categories = new HashSet<>();
+		if (!event.isNull("classifications")) {
+			JSONArray classifications = event.getJSONArray("classifications");
+			for (int i = 0; i < classifications.length(); i++) {
+				JSONObject classification = classifications.getJSONObject(i);
+				if (!classification.isNull("segment")) {
+					JSONObject segment = classification.getJSONObject("segment");
+					if (!segment.isNull("name")) {
+						String name = segment.getString("name");
+						categories.add(name);
+					}
+				}
+			}
+		}
+
+		return categories;
+	}
+
 	private void queryAPI(double lat, double lon) {
 		JSONArray events = search(lat, lon, null);
 		try {
