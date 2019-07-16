@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class TicketMasterAPI {
@@ -60,6 +61,53 @@ public class TicketMasterAPI {
 			e.printStackTrace();
 		}
 		return new JSONArray();    }
+    
+	private String getAddress(JSONObject event) throws JSONException {
+		if (!event.isNull("_embedded")) {
+			JSONObject embedded = event.getJSONObject("_embedded");
+			
+			if (!embedded.isNull("venues")) {
+				JSONArray venues = embedded.getJSONArray("venues");
+				
+				for (int i = 0; i < venues.length(); ++i) {
+					JSONObject venue = venues.getJSONObject(i);
+					
+					StringBuilder sb = new StringBuilder();
+					
+					if (!venue.isNull("address")) {
+						JSONObject address = venue.getJSONObject("address");
+						
+						if (!address.isNull("line1")) {
+							sb.append(address.getString("line1"));
+						}
+						if (!address.isNull("line2")) {
+							sb.append(" ");
+							sb.append(address.getString("line2"));
+						}
+						if (!address.isNull("line3")) {
+							sb.append(" ");
+							sb.append(address.getString("line3"));
+						}
+					}
+					
+					if (!venue.isNull("city")) {
+						JSONObject city = venue.getJSONObject("city");
+						
+						if (!city.isNull("name")) {
+							sb.append(" ");
+							sb.append(city.getString("name"));
+						}
+					}
+					
+					if (!sb.toString().equals("")) {
+						return sb.toString();
+					}
+				}
+			}
+		}
+
+		return "";
+	}
     
 	private void queryAPI(double lat, double lon) {
 		JSONArray events = search(lat, lon, null);
