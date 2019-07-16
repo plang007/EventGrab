@@ -109,6 +109,22 @@ public class TicketMasterAPI {
 		return "";
 	}
     
+	private String getImageUrl(JSONObject event) throws JSONException {
+		if (!event.isNull("images")) {
+			JSONArray images = event.getJSONArray("images");
+			
+			for (int i = 0; i < images.length(); ++i) {
+				JSONObject image = images.getJSONObject(i);
+				
+				if (!image.isNull("url")) {
+					return image.getString("url");
+				}
+			}
+		}
+
+		return "";
+	}
+	
 	private void queryAPI(double lat, double lon) {
 		JSONArray events = search(lat, lon, null);
 		try {
