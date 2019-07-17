@@ -4,12 +4,18 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import entity.Item;
+import entity.Item.ItemBuilder;
+
 
 public class TicketMasterAPI {
 	private static final String URL = "https://app.ticketmaster.com/discovery/v2/events.json";
@@ -146,6 +152,46 @@ public class TicketMasterAPI {
 		return categories;
 	}
 
+
+	// Convert JSONArray to a list of item objects.
+	private List<Item> getItemList(JSONArray events) throws JSONException {
+		List<Item> itemList = new ArrayList<>();
+
+		for (int i = 0; i < events.length(); ++i) {
+			JSONObject event = events.getJSONObject(i);
+			
+			ItemBuilder builder = new ItemBuilder();
+			
+			if (!event.isNull("name")) {
+				builder.setName(event.getString("name"));
+			}
+			
+			if (!event.isNull("id")) {
+				builder.setItemId(event.getString("id"));
+			}
+			
+			if (!event.isNull("url")) {
+				builder.setUrl(event.getString("url"));
+			}
+			
+			if (!event.isNull("rating")) {
+				builder.setRating(event.getDouble("rating"));
+			}
+			
+			if (!event.isNull("distance")) {
+				builder.setDistance(event.getDouble("distance"));
+			}
+			
+			builder.setCategories(getCategories(event));
+			builder.setAddress(getAddress(event));
+			builder.setImageUrl(getImageUrl(event));
+			
+			itemList.add(builder.build());
+			return itemList;
+
+		}
+
+	
 	private void queryAPI(double lat, double lon) {
 		JSONArray events = search(lat, lon, null);
 		try {
