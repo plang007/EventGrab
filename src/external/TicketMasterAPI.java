@@ -212,5 +212,4 @@ public class TicketMasterAPI {
 		tmApi.queryAPI(30, -90);
 	}
 
-
 }
