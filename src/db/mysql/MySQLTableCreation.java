@@ -53,6 +53,13 @@ public class MySQLTableCreation {
 								+ "PRIMARY KEY (item_id))";
 						stmt.executeUpdate(sql);
 
+						sql = "CREATE TABLE categories ("
+								+ "item_id VARCHAR(255) NOT NULL,"
+								+ "category VARCHAR(255) NOT NULL,"
+								+ "PRIMARY KEY (item_id, category),"
+								+ "FOREIGN KEY (item_id) REFERENCES items(item_id))";
+						stmt.executeUpdate(sql);
+
 
 			System.out.println("Import is done successfully.");
 		} catch (Exception e) {
