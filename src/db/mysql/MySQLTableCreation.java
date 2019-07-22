@@ -76,6 +76,12 @@ public class MySQLTableCreation {
 								+ "FOREIGN KEY (item_id) REFERENCES items(item_id),"
 								+ "FOREIGN KEY (user_id) REFERENCES users(user_id))";
 						stmt.executeUpdate(sql);
+						
+						// Step 4: insert data
+						sql = "INSERT INTO users VALUES ("
+								+ "'1111', '3229c1097c00d497a0fd282d586be050', 'John', 'Smith')";
+						System.out.println("Executing query: " + sql);
+						stmt.executeUpdate(sql);
 
 			System.out.println("Import is done successfully.");
 		} catch (Exception e) {
