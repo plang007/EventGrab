@@ -67,8 +67,15 @@ public class MySQLTableCreation {
 								+ "last_name VARCHAR(255),"
 								+ "PRIMARY KEY (user_id))";
 						stmt.executeUpdate(sql);
-
-
+						
+						sql = "CREATE TABLE history ("
+								+ "user_id VARCHAR(255) NOT NULL,"
+								+ "item_id VARCHAR(255) NOT NULL,"
+								+ "last_favor_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,"
+								+ "PRIMARY KEY (user_id, item_id),"
+								+ "FOREIGN KEY (item_id) REFERENCES items(item_id),"
+								+ "FOREIGN KEY (user_id) REFERENCES users(user_id))";
+						stmt.executeUpdate(sql);
 
 			System.out.println("Import is done successfully.");
 		} catch (Exception e) {
