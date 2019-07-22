@@ -59,6 +59,15 @@ public class MySQLTableCreation {
 								+ "PRIMARY KEY (item_id, category),"
 								+ "FOREIGN KEY (item_id) REFERENCES items(item_id))";
 						stmt.executeUpdate(sql);
+						
+						sql = "CREATE TABLE users ("
+								+ "user_id VARCHAR(255) NOT NULL,"
+								+ "password VARCHAR(255) NOT NULL,"
+								+ "first_name VARCHAR(255),"
+								+ "last_name VARCHAR(255),"
+								+ "PRIMARY KEY (user_id))";
+						stmt.executeUpdate(sql);
+
 
 
 			System.out.println("Import is done successfully.");
