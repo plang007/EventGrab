@@ -22,10 +22,24 @@ public class MySQLTableCreation {
 				e.printStackTrace();
 			}
 
-
 			if (conn == null) {
 				return;
 			}
+			
+			
+			// Step 2 Drop tables in case they exist.
+						Statement stmt = conn.createStatement();
+						String sql = "DROP TABLE IF EXISTS categories";
+						stmt.executeUpdate(sql);
+						
+						sql = "DROP TABLE IF EXISTS history";
+						stmt.executeUpdate(sql);
+						
+						sql = "DROP TABLE IF EXISTS items";
+						stmt.executeUpdate(sql);
+						
+						sql = "DROP TABLE IF EXISTS users";
+						stmt.executeUpdate(sql);
 
 			System.out.println("Import is done successfully.");
 		} catch (Exception e) {
