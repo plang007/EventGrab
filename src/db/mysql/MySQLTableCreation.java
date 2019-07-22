@@ -41,6 +41,19 @@ public class MySQLTableCreation {
 						sql = "DROP TABLE IF EXISTS users";
 						stmt.executeUpdate(sql);
 
+						// Step 3 Create new tables
+						sql = "CREATE TABLE items ("
+								+ "item_id VARCHAR(255) NOT NULL,"
+								+ "name VARCHAR(255),"
+								+ "rating FLOAT,"
+								+ "address VARCHAR(255),"
+								+ "image_url VARCHAR(255),"
+								+ "url VARCHAR(255),"
+								+ "distance FLOAT,"
+								+ "PRIMARY KEY (item_id))";
+						stmt.executeUpdate(sql);
+
+
 			System.out.println("Import is done successfully.");
 		} catch (Exception e) {
 			e.printStackTrace();
